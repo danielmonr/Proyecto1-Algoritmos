@@ -55,6 +55,10 @@ void ArbolB<T>::setRaiz(Nodo<T>* nodor){
 // Funcion para insertar un valor en el arbol, debe de ser de forma que este ordenado
 template <class T>
 void ArbolB<T>::insertarValor(T valor){
+	
+
+
+
 	// Vacio
 	std::cout << "falta - ArbolB.insertarValor()" << std::endl;
 }

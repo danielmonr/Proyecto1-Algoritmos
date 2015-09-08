@@ -9,6 +9,7 @@
  */
 
 #include <iostream>
+#include "Casilla.h"
 
 template <class T>
 class Nodo{
@@ -30,7 +31,7 @@ class Nodo{
 		int libre();
 
 	private:
-		T* arreglo;
+		Casilla<T>* arreglo;
 		Nodo<T>** hijos;
 		int t, nivel;
 		
@@ -41,7 +42,7 @@ template <class T>
 Nodo<T>::Nodo(int tamano, int level){
 	t = tamano;
 	nivel = level;
-	T* arreglo = new T[t];
+	Casilla<T>* arreglo = new Casilla<T>[t];
 	hijos = new Nodo<T>* [t+1];
 	for (int i = 0; i <= t; ++i){
 		hijos[i] = nullptr;
@@ -99,13 +100,13 @@ void Nodo<T>::setNivel(int level){
 // Regresa la informacion del nodo en la posicion señalada en el parametro
 template <class T>
 T Nodo<T>::getInfo(int posicion){
-	return arreglo[posicion];
+	return arreglo[posicion].getValor();
 }
 
 // Le da valor a algun elemento del nodo en la posicion deseada
 template <class T>
 void Nodo<T>::setInfo(int posicion, T nueva){
-	arreglo[posicion] = nueva;
+	arreglo[posicion].setValor(nueva);
 }
 
 // Encargado de ordenar los elementos dentro del Nodo
@@ -119,7 +120,7 @@ void Nodo<T>::ordenar(){
 template <class T>
 bool Nodo<T>::lleno(){
 	for (int i = 0; i < t/2; ++i){
-		if(!arreglo[i])
+		if(arreglo[i].vacio())
 			return false;
 	}
 	return true;
@@ -130,7 +131,7 @@ bool Nodo<T>::lleno(){
 template <class T>
 int Nodo<T>::libre(){
 	for (int i = 0; i <t ;++i){
-		if(!arreglo[i])
+		if(arreglo[i].vacio())
 			return i;
 	}
 	return -1;
