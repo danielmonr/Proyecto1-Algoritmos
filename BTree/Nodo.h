@@ -26,9 +26,12 @@ class Nodo{
 		void setNivel(int level);
 
 		void ordenar();
+		Nodo<T>* buscarLugar(T valor);
 		
 		bool lleno();
 		int libre();
+		bool nodoHoja();
+		bool insertar(T valor);
 
 	private:
 		Casilla<T>* arreglo;
@@ -135,4 +138,52 @@ int Nodo<T>::libre(){
 			return i;
 	}
 	return -1;
+}
+
+// Funcion para saber si es Nodo Hoja
+template <class T>
+bool Nodo<T>::nodoHoja(){
+	for (int i = 0; i <= t; ++i)
+		if(hijos[i] == nullptr)
+			return true;
+
+	return false;
+}
+
+// Funcion para buscar de forma recursiva el Nodo Hoja de la insercion de un nuevo elemento
+template <class T>
+Nodo<T>* Nodo<T>::buscarLugar(T valor){
+	for (int i = 0; i < t; ++i){
+		if(arreglo[i].vacio())
+			return this;
+		else{
+			if (arreglo[i] < valor)
+				if(getIzquierdo(i) == nullptr)
+					return this;
+				else
+					return getIzquierdo()->buscarLugar(valor);
+			else if(arreglo[i] == valor){
+				std::cout << "error - valores iguales" << std::endl;
+				return nullptr;
+			}
+		}
+	}
+	if (arreglo[t-1].getDerecho() == nullptr)
+		return this;
+	else 
+		return getDerecho(t-1)->buscarLugar(valor);
+}
+
+template <class T>
+bool Nodo<T>::insertar(T valor){
+	int pos = libre();
+	if (libre == -1)
+		return false;
+	if (arreglo[pos].vacio()){
+		arreglo[pos].setValor(valor);
+		ordenar();
+		return true;
+	}
+	else
+		return false;
 }

@@ -23,8 +23,10 @@ class ArbolB{
 		Nodo<T>* getRaiz();
 		void setRaiz(Nodo<T>* nodor);
 		
-		void insertarValor(T valor);
+		bool insertarValor(T valor);
 		Nodo<T>* getNodoHoja(T valor);
+
+		Nodo<T>* crearNodo();
 
 		void buscar(T info);
 		// void ordenar();
@@ -38,6 +40,8 @@ class ArbolB{
 template <class T>
 ArbolB<T>::ArbolB(int N){
 	n = N;
+	Nodo<T>* r = crearNodo();
+	raiz = r;
 }
 
 // Funcion para obtener la raiz
@@ -52,23 +56,28 @@ void ArbolB<T>::setRaiz(Nodo<T>* nodor){
 	raiz = nodor;
 }
 
-// Funcion para insertar un valor en el arbol, debe de ser de forma que este ordenado
+// Funcion para insertar un valor en el arbol, debe de ser de forma que este ordenado, regresa un booleano dependendiendo del exito de la operacion
 template <class T>
-void ArbolB<T>::insertarValor(T valor){
+bool ArbolB<T>::insertarValor(T valor){
+	Nodo<T>* hoja = getNodoHoja(valor);
+	if (hoja == nullptr)
+		return false;
 	
-
-
-
-	// Vacio
-	std::cout << "falta - ArbolB.insertarValor()" << std::endl;
+	if(hoja->libre != -1){
+		if(hoja->insertar(valor))
+			return true;
+		else
+			return false;
+	}
+	// Incompleto
+	std::cout << "Incompleto - ArbolB.insertarValor()" << std::endl;
+	return false;
 }
 
 // Funcion para buscar el nodo hoja en el que debe de incluirse el nuevo valor.
 template <class T>
 Nodo<T>* ArbolB<T>::getNodoHoja(T valor){
-	// Vacio
-	std::cout << "falta - ArbolB.getNodoHoja()" << std::endl;
-	return nullptr;
+	return raiz->buscarLugar(valor);
 }
 
 template <class T>
@@ -87,4 +96,10 @@ template <class T>
 void ArbolB<T>::dividirNodo(Nodo<T>* nododiv){
 	// Vacio
 	std::cout << "falta - ArbolB.dividirNodo()" << std::endl;
+}
+
+template <class T>
+Nodo<T>* ArbolB<T>::crearNodo(){
+	Nodo<T> * nuevo = new Nodo<T>(2*n);
+	return nuevo;
 }
