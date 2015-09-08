@@ -35,7 +35,11 @@ class Nodo{
 		bool nodoHoja();
 		bool insertar(T valor);
 
+		void setPadre(Nodo<T>* papa);
+		Nodo<T>* getPadre();
+
 	private:
+		Nodo<T>* padre;
 		Casilla<T>* arreglo;
 		Nodo<T>** hijos;
 		int t, nivel;
@@ -52,6 +56,18 @@ Nodo<T>::Nodo(int tamano, int level){
 	for (int i = 0; i <= t; ++i){
 		hijos[i] = nullptr;
 	}
+}
+
+// funcion para obtener el padre del nodo
+template <class T>
+Nodo<T>* Nodo<T>::getPadre(){
+	return padre;
+}
+
+// Funcion para establecer el padre del Nodo
+template <class T>
+void Nodo<T>::setPadre(Nodo<T>* papa){
+	padre = papa;
 }
 
 // Inicio de bloque de configuración de los hijos, o pedido, según su posición de acuerdo a los elementos del arreglo
