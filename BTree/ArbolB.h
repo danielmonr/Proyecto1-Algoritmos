@@ -127,6 +127,38 @@ bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor){
 		for(int i = med+1; i < k; ++i){
 			derecho->insertar(temp[i]);
 		}
+		Nodo<T>* aux, x;
+		x = derecho;
+		for (int i = k-1; i >= 0; --i){
+			aux = nododiv->getDerecho(i);
+			if(aux == nullptr);
+			else{
+
+				for(int j = x->libre() -1; j >= 0; --j){
+					if(aux->min() > x->getInfo(j)){
+						x->setDerecho(j, aux);
+						aux->setPadre(x);
+						nododiv->setDerecho(i, nullptr);
+						break;
+					}
+						
+				}
+			}
+		}
+		x = izquierdo;
+		for (int i = 0; i < k-1; ++i){
+			aux = nododiv->getIzquierdo(i);
+			if(aux == nullptr)
+				break;
+			for(int j = 0; j < x->libre()-1; ++j){
+				if(aux->max() < x->getInfo(j)){
+					x->setIzquierdo(j, aux);
+					aux->setPadre(x);
+					nododiv->setIzquierdo(i, nullptr);
+					break;
+				}
+			}
+		}
 	}
 
 	// Vacio

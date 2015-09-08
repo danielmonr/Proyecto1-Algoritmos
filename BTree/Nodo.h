@@ -34,6 +34,7 @@ class Nodo{
 		int libre();
 		bool nodoHoja();
 		bool insertar(T valor);
+		int max();
 
 		void setPadre(Nodo<T>* papa);
 		Nodo<T>* getPadre();
@@ -205,4 +206,13 @@ bool Nodo<T>::insertar(T valor){
 	}
 	else
 		return false;
+}
+
+// Funcion que regresa el valor más grande del Nodo
+template <class T>
+int Nodo<T>::max(){
+	if (libre() == -1)
+		return t-1;
+	else
+		return libre()-1;
 }
