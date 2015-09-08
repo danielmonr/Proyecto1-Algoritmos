@@ -8,8 +8,10 @@
  * =====================================================================================
  */
 
+#pragma once
 #include <iostream>
 #include "Casilla.h"
+#include "Ordenamiento.h"
 
 template <class T>
 class Nodo{
@@ -66,7 +68,7 @@ void Nodo<T>::setIzquierdo(int posicion, Nodo<T>* hijo){
 	if(posicion < t)
 		hijos[posicion] = hijo;
 	else
-		std::cout << "error de ubicación" << std::endl;
+		std::cout << "error - ubicación invalida" << std::endl;
 }
 
 
@@ -83,7 +85,7 @@ void Nodo<T>::setDerecho(int posicion, Nodo<T>* hijo){
 	if (posicion < t)
 		hijos[posicion + 1] = hijo;
 	else
-		std::cout << "error de ubicacion" << std::endl;
+		std::cout << "error - ubicacion invalida" << std::endl;
 }
 // Fin de bloque
 
@@ -116,7 +118,7 @@ void Nodo<T>::setInfo(int posicion, T nueva){
 template < class T>
 void Nodo<T>::ordenar(){
 	// Falta el algoritmo
-	std::cout << "Faltante - Nodo.ordenar()" << std::endl;
+	std::cout << "falta - Nodo.ordenar()" << std::endl;
 }
 
 // Funcion para ver si el Nodo cumple con la capacidad minima
@@ -174,6 +176,7 @@ Nodo<T>* Nodo<T>::buscarLugar(T valor){
 		return getDerecho(t-1)->buscarLugar(valor);
 }
 
+// Funcion para insertar un valor en el Nodo, y luego ordenarlo de nuevo, regresa un booleano de acuerdo al resultado de la operacion
 template <class T>
 bool Nodo<T>::insertar(T valor){
 	int pos = libre();

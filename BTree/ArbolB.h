@@ -8,9 +8,11 @@
  * =====================================================================================
  */
 
-
+#pragma once
 #include <iostream>
 #include "Nodo.h"
+#include "Casilla.h"
+#include "Ordenamiento.h"
 
 template <class T>
 class ArbolB{
@@ -28,12 +30,12 @@ class ArbolB{
 
 		Nodo<T>* crearNodo();
 
-		void buscar(T info);
-		// void ordenar();
+		Casilla<T> buscar(T info);
+		T* ordenarArreglo(T a[]);
 
 		void imprimir();
 
-		void dividirNodo(Nodo<T>* nododiv);
+		bool dividirNodo(Nodo<T>* nododiv, T valor);
 };
 
 // Constructor del Arbol
@@ -69,9 +71,8 @@ bool ArbolB<T>::insertarValor(T valor){
 		else
 			return false;
 	}
-	// Incompleto
-	std::cout << "Incompleto - ArbolB.insertarValor()" << std::endl;
-	return false;
+	else
+		return dividirNodo(hoja, valor);
 }
 
 // Funcion para buscar el nodo hoja en el que debe de incluirse el nuevo valor.
@@ -81,9 +82,10 @@ Nodo<T>* ArbolB<T>::getNodoHoja(T valor){
 }
 
 template <class T>
-void ArbolB<T>::buscar(T info){
+Casilla<T> ArbolB<T>::buscar(T info){
 	// Vacio, no se como o.o
 	std::cout << "falta - ArbolB.buscar()" << std::endl;
+	return NULL;
 }
 
 template <class T>
@@ -93,7 +95,10 @@ void ArbolB<T>::imprimir(){
 }
 
 template <class T>
-void ArbolB<T>::dividirNodo(Nodo<T>* nododiv){
+bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor){
+	Nodo<T>* izquierdo = crearNodo();
+	Nodo<T>* derecho = crearNodo();
+
 	// Vacio
 	std::cout << "falta - ArbolB.dividirNodo()" << std::endl;
 }
@@ -102,4 +107,9 @@ template <class T>
 Nodo<T>* ArbolB<T>::crearNodo(){
 	Nodo<T> * nuevo = new Nodo<T>(2*n);
 	return nuevo;
+}
+
+template <class T>
+T* ArbolB<T>::ordenarArreglo(T a[]){
+	return a;
 }
