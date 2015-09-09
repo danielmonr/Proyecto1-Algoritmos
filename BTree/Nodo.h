@@ -30,6 +30,7 @@ class Nodo{
 		void ordenar();
 		Nodo<T>* buscarLugar(T valor);
 		
+		int getPosHijo(Nodo<T>* h);
 		bool lleno();
 		int libre();
 		bool nodoHoja();
@@ -163,10 +164,10 @@ int Nodo<T>::libre(){
 template <class T>
 bool Nodo<T>::nodoHoja(){
 	for (int i = 0; i <= t; ++i)
-		if(hijos[i] == nullptr)
-			return true;
+		if(hijos[i] != nullptr)
+			return false;
 
-	return false;
+	return true;
 }
 
 // Funcion para buscar de forma recursiva el Nodo Hoja de la insercion de un nuevo elemento
@@ -174,13 +175,15 @@ template <class T>
 Nodo<T>* Nodo<T>::buscarLugar(T valor){
 	for (int i = 0; i < t; ++i){
 		if(arreglo[i].vacio())
-			return this;
+			if (getDerecho(i)->max() < valor)
+				return this;
+			else return getDerecho(i)->buscarLugar(valor);
 		else{
 			if (arreglo[i] < valor)
 				if(getIzquierdo(i) == nullptr)
 					return this;
 				else
-					return getIzquierdo()->buscarLugar(valor);
+					return getIzquierdo(i)->buscarLugar(valor);
 			else if(arreglo[i] == valor){
 				std::cout << "error - valores iguales" << std::endl;
 				return nullptr;
@@ -215,4 +218,14 @@ int Nodo<T>::max(){
 		return t-1;
 	else
 		return libre()-1;
+}
+
+template <class T>
+int Nodo<T>::getPosHijo(Nodo<T>* h){
+	for (int i = 0; i <= t; ++i){
+		if(hijos[i] == h)
+			return i;
+	}
+
+	return -1;
 }

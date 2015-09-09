@@ -64,6 +64,7 @@ void ArbolB<T>::setRaiz(Nodo<T>* nodor){
 template <class T>
 bool ArbolB<T>::insertarValor(T valor){
 	Nodo<T>* hoja = getNodoHoja(valor);
+	Nodo<T>* papa = hoja->getPadre();
 	if (hoja == nullptr)
 		return false;
 	
@@ -73,7 +74,27 @@ bool ArbolB<T>::insertarValor(T valor){
 		else
 			return false;
 	}
-	else
+	else if (papa != nullptr){
+		int posP = papa->getPosHijo(hoja);
+		if (posP > 0 && papa->getIzquierdo(posP-1)->libre != -1){
+			T aux = hoja->min();
+			T temp;
+			if (aux < valor){
+				temp = papa->getInfo(posP-1);
+				papa->setInfo(posP-1, aux);
+				hoja->setInfo(0, valor);
+				hoja->ordenar();
+				insertarValor(temp);
+			}
+			else{
+				temp = papa->getInfo(posP-1);
+				papa->setInfo(posP-1, valor);
+				insertarValor(temp);
+			}
+		}
+		
+	}
+		
 		return dividirNodo(hoja, valor);
 }
 
@@ -114,6 +135,12 @@ bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor){
 	temp = ordenarArreglo(temp);
 	T medio = temp[med];
 
+	for (int i = 0; i < med; ++i){
+		izquierdo->insertar(temp[i]);
+	}
+	for (int i = med+1; i < k; ++i)
+		derecho->insertar(temp[i]);
+
 	if(nododiv->getPadre() == nullptr){
 		Nodo<T>* nr = crearNodo();
 		if(!(nr->insertar(medio)))
@@ -121,12 +148,7 @@ bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor){
 		raiz = nr;
 		nr->setIzquierdo(0, izquierdo);
 		nr->setDerecho(0, derecho);
-		for(int i = 0; i < med; ++i){
-			izquierdo->insertar(temp[i]);
-		}
-		for(int i = med+1; i < k; ++i){
-			derecho->insertar(temp[i]);
-		}
+		
 		Nodo<T>* aux, x;
 		x = derecho;
 		for (int i = k-1; i >= 0; --i){
@@ -160,6 +182,11 @@ bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor){
 			}
 		}
 	}
+	else if( nododiv->getPadre()->libre() != -1){
+		if(!(nododiv->getPadre()->insertar(medio)))
+			return false;
+
+	}
 
 	// Vacio
 	std::cout << "falta - ArbolB.dividirNodo()" << std::endl;
@@ -178,3 +205,4 @@ template <class T>
 T* ArbolB<T>::ordenarArreglo(T a[]){
 	return a;
 }
+
