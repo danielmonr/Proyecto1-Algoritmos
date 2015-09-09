@@ -35,6 +35,7 @@ class Nodo{
 		int libre();
 		bool nodoHoja();
 		bool insertar(T valor);
+		bool insertarConLink(T valor, Nodo<T>* i, Nodo<T>* d);
 		int max();
 
 		void setPadre(Nodo<T>* papa);
@@ -200,9 +201,23 @@ Nodo<T>* Nodo<T>::buscarLugar(T valor){
 template <class T>
 bool Nodo<T>::insertar(T valor){
 	int pos = libre();
-	if (libre == -1)
+	if (pos == -1)
 		return false;
 	if (arreglo[pos].vacio()){
+		arreglo[pos].setValor(valor);
+		ordenar();
+		return true;
+	}
+	else
+		return false;
+}
+
+template <class T>
+bool Nodo<T>::insertarConLink(T valor, Nodo<T>* i, Nodo<T>* d){
+	int pos = libre();
+	if (pos == -1)
+		return false;
+	if(arreglo[pos].vacio()){
 		arreglo[pos].setValor(valor);
 		ordenar();
 		return true;

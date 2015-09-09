@@ -76,7 +76,7 @@ bool ArbolB<T>::insertarValor(T valor){
 	}
 	else if (papa != nullptr){
 		int posP = papa->getPosHijo(hoja);
-		if (posP > 0 && papa->getIzquierdo(posP-1)->libre != -1){
+		if (posP > 0 && papa->getIzquierdo(posP-1)->libre() != -1){
 			T aux = hoja->min();
 			T temp;
 			if (aux < valor){
@@ -84,18 +84,35 @@ bool ArbolB<T>::insertarValor(T valor){
 				papa->setInfo(posP-1, aux);
 				hoja->setInfo(0, valor);
 				hoja->ordenar();
-				insertarValor(temp);
+				return insertarValor(temp);
 			}
 			else{
 				temp = papa->getInfo(posP-1);
 				papa->setInfo(posP-1, valor);
-				insertarValor(temp);
+				return insertarValor(temp);
+			}
+		}
+		else if(posP < n*2 && papa->getDerecho(posP)->libre() != -1){
+			T aux = hoja->max();
+			T temp;
+			if (aux > valor){
+				temp = papa->getInfo(posP);
+				papa->setInfo(posP, aux);
+				hoja->setInfo(n*2, valor);
+				hoja->ordenar();
+				return insertarValor(temp);
+			}
+			else{
+				temp = papa->getInfo(posP);
+				papa->setInfo(posP, valor);
+				return insertarValor(temp);
 			}
 		}
 		
 	}
-		
+	else{
 		return dividirNodo(hoja, valor);
+	}
 }
 
 // Funcion para buscar el nodo hoja en el que debe de incluirse el nuevo valor.
@@ -183,7 +200,7 @@ bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor){
 		}
 	}
 	else if( nododiv->getPadre()->libre() != -1){
-		if(!(nododiv->getPadre()->insertar(medio)))
+		if(!(nododiv->getPadre()->insertarConLink(medio, izquierdo, derecho)))
 			return false;
 
 	}
