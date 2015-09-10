@@ -200,6 +200,10 @@ bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor){
 		}
 	}
 	else if( nododiv->getPadre()->libre() != -1){
+		int nuev = nododiv->getPadre()->libre();
+		int linkv = nododiv->getPadre()->getPosHijo(nododiv);
+		nododiv->getPadre()->recorrerHijos(nododiv);
+
 		if(!(nododiv->getPadre()->insertarConLink(medio, izquierdo, derecho)))
 			return false;
 

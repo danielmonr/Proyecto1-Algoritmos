@@ -31,12 +31,14 @@ class Nodo{
 		Nodo<T>* buscarLugar(T valor);
 		
 		int getPosHijo(Nodo<T>* h);
+		int getPos(T valor);
 		bool lleno();
 		int libre();
 		bool nodoHoja();
 		bool insertar(T valor);
 		bool insertarConLink(T valor, Nodo<T>* i, Nodo<T>* d);
 		int max();
+		bool recorrerHijos(int pos);
 
 		void setPadre(Nodo<T>* papa);
 		Nodo<T>* getPadre();
@@ -201,12 +203,14 @@ Nodo<T>* Nodo<T>::buscarLugar(T valor){
 template <class T>
 bool Nodo<T>::insertar(T valor){
 	int pos = libre();
+	int vrdd;
 	if (pos == -1)
 		return false;
 	if (arreglo[pos].vacio()){
 		arreglo[pos].setValor(valor);
 		ordenar();
 		return true;
+		}
 	}
 	else
 		return false;
@@ -243,4 +247,32 @@ int Nodo<T>::getPosHijo(Nodo<T>* h){
 	}
 
 	return -1;
+}
+
+template <class T>
+int Nodo<T>::getPos(T valor){
+	for (int i = 0; i < t ; ++i){
+		if (arreglo[i].getValor() == valor)
+			return i;
+		if (arreglo[i].vacio())
+			return -1;
+	}
+	return -1;
+}
+
+template <class T>
+bool Nodo<T>::recorrerHijos(int pos){
+	Nodo<T>* temp = hijos[pos+2];
+	Nodo<T>* cambio;
+	for (int i = pos; i < t; ++i){
+		cambio = hijos[i+1]
+		hijos[i+1] = temp;
+		temp = cambio;
+		if(hijos[i+1] == nullptr)
+			return true;
+		temp = hijos[i+2];
+
+	}
+
+	return true;
 }
