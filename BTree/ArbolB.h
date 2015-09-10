@@ -35,7 +35,8 @@ class ArbolB{
 
 		void imprimir();
 
-		bool dividirNodo(Nodo<T>* nododiv, T valor);
+		bool dividirNodo(Nodo<T>* nododiv, T valor, nullptr, nullptr);
+		Nodo<T>* dividirNodoD(Nodo<T>* nododiv, T valor);
 };
 
 // Constructor del Arbol
@@ -138,7 +139,7 @@ void ArbolB<T>::imprimir(){
 
 // Funcion para hacer una inserción con la ayuda de una división de Nodo
 template <class T>
-bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor){
+bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor, Nodo<T>* der, Nodo<T>* iz){
 	Nodo<T>* izquierdo = crearNodo();
 	Nodo<T>* derecho = crearNodo();
 	
@@ -165,6 +166,8 @@ bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor){
 		raiz = nr;
 		nr->setIzquierdo(0, izquierdo);
 		nr->setDerecho(0, derecho);
+		izquierdo->setPadre(nr);
+		derecho->setPadre(nr);
 		
 		Nodo<T>* aux, x;
 		x = derecho;
@@ -203,15 +206,21 @@ bool ArbolB<T>::dividirNodo(Nodo<T>* nododiv, T valor){
 		int nuev = nododiv->getPadre()->libre();
 		int linkv = nododiv->getPadre()->getPosHijo(nododiv);
 		nododiv->getPadre()->recorrerHijos(nododiv);
+		nododiv
 
 		if(!(nododiv->getPadre()->insertarConLink(medio, izquierdo, derecho)))
 			return false;
 
 	}
+	else{
+		
+	}
+	return true;
+}
 
-	// Vacio
-	std::cout << "falta - ArbolB.dividirNodo()" << std::endl;
-	return false;
+template <class T>
+Nodo<T>* Arbol<T>::dividirNodoD(Nodo<T>* nododiv, T valor){
+	if()
 }
 
 // Funcion para la creacion de un Nodo con el numero de casillas 'm' adecuado

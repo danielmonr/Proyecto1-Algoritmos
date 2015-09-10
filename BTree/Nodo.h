@@ -210,7 +210,7 @@ bool Nodo<T>::insertar(T valor){
 		arreglo[pos].setValor(valor);
 		ordenar();
 		return true;
-		}
+		
 	}
 	else
 		return false;
@@ -265,7 +265,7 @@ bool Nodo<T>::recorrerHijos(int pos){
 	Nodo<T>* temp = hijos[pos+2];
 	Nodo<T>* cambio;
 	for (int i = pos; i < t; ++i){
-		cambio = hijos[i+1]
+		cambio = hijos[i+1];
 		hijos[i+1] = temp;
 		temp = cambio;
 		if(hijos[i+1] == nullptr)
